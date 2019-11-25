@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Teams
+{% endblock %}
+
+{% block header %}
+	List of teams
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+	<div class="inner">
+		<a href ="{% url 'forms:create_team' %}"><button class="btn btn-primary" style="margin: 2%">New team</button></a>
+	</div>
+{% endif %}
+
+	{% if front %}
+    	<ul class="inner">
+    	{% for t in front %}
+        	<li class="item">
+                <p>
+            		<a href = "{% url 'teams:single' t.id %}">
+            		<h2>
+            		{{t.name}}
+            		</h2>
+            		</a>
+            	</p>
+            	{% if t.singleplayerteam and t.players %}
+            		<p>
+            		single player:
+            		{% for p in t.players.all %}
+            		<a href="{% url 'users:single' p.id %}">{{p.username}}</a>
+            		{% endfor %}
+            		</p>
+            	{% else %}
+            		<p>
+            		players: 
+            		{{t.players.count}}
+            	{% endif %}
+            	{% if t.flag %}
+            	<p>
+            		<img src='{{t.flag.url}}' width='100' />
+            	</p>
+            	{% endif %}
+        	</li>
+    	{% endfor %}
+    	</ul>
+    	
+ 		<div class="paging">
+        		{% if front.has_previous %}
+            		<a href="?page={{ front.previous_page_number }}">&larr;</a>
+        		{% endif %}
+		
+            	{{ front.number }} / {{ front.paginator.num_pages }}
+		
+        		{% if front.has_next %}
+            		<a href="?page={{ front.next_page_number }}">&rarr;</a>
+        		{% endif %}
+		</div>
+    	
+	{% else %}
+    	<p>No teams to show.</p>
+	{% endif %}
+{% endblock %}
+
