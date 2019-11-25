@@ -9,8 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
-
-from func.func import compare
 from forms.forms import AddTeamForm
 from forms.forms import AddSponsorForm
 
@@ -81,7 +79,7 @@ def single(request, id):
         if len(available_sponsors):
             add_new_sponsor = AddSponsorForm(
                 s=available_sponsors)  # vytvor formular na pridani tymu do turnaje, az tedka
-            if (user == tournament.poradatele):
+            if user == tournament.poradatele:
                 permitted_add_sponsor = True
             else:
                 permitted_add_sponsor = False
@@ -90,7 +88,11 @@ def single(request, id):
     his_teams = Team.objects.filter(players__in=[request.user])
 
     # zjisti jestli muze byt rozhodcim
-    permitted = not compare(his_teams, teams)
+    permitted = True
+    s1 = set(his_teams)
+    s2 = set(teams)
+    if (s1 & s2):
+        permitted = False
 
     tournament_started = tournament.started
 

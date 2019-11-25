@@ -27,7 +27,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost','127.0.0.1','iistournaments.herokuapp.com','pacific-oasis-90795.herokuapp.com']
 
 INSTALLED_APPS = [
-    'func.apps.FuncConfig',
     'forms.apps.FormsConfig',
     'users.apps.UsersConfig',
     'matches.apps.MatchesConfig',
@@ -142,7 +141,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # pokud se cookie age nenastavi, tak je to na 2 tydny
-SESSION_COOKIE_AGE = 60
+SESSION_COOKIE_AGE = 600
 # nastaveni obnoveni casovani odhlaseni po refreshi stranky
 SESSION_SAVE_EVERY_REQUEST = True
 
