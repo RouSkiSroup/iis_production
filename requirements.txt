@@ -36,4 +36,4 @@ requests-unixsocket==0.1.5
 simplejson==3.13.2
 sqlparse==0.3.0
 systemd-python==234
-whitenoise==3.3.1
+whitenoise==4.1.4
